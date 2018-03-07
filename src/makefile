@@ -35,11 +35,11 @@ CPP		=	c++
 
 ../plugins/%.so:	plugins/%.c ladspa.h
 	$(CC) $(CFLAGS) -o plugins/$*.o -c plugins/$*.c
-	$(LD) -o ../plugins/$*.so plugins/$*.o -shared
+	$(LD) -o ../plugins/$*.so plugins/$*.o -shared -lm
 
 ../plugins/%.so:	plugins/%.cpp ladspa.h
 	$(CPP) $(CXXFLAGS) -o plugins/$*.o -c plugins/$*.cpp
-	$(CPP) -o ../plugins/$*.so plugins/$*.o -shared
+	$(CPP) -o ../plugins/$*.so plugins/$*.o -shared -lm
 
 ###############################################################################
 #
@@ -90,19 +90,19 @@ targets:	$(PLUGINS) $(PROGRAMS)
 #
 
 ../bin/applyplugin:	applyplugin.o load.o default.o
-	$(CC) $(CFLAGS) $(LIBRARIES)					\
-		-o ../bin/applyplugin					\
-		applyplugin.o load.o default.o
+	$(CC) $(CFLAGS) 					\
+		-o ../bin/applyplugin				\
+		applyplugin.o load.o default.o $(LIBRARIES)
 
 ../bin/analyseplugin:	analyseplugin.o load.o default.o
-	$(CC) $(CFLAGS) $(LIBRARIES)					\
-		-o ../bin/analyseplugin 				\
-		analyseplugin.o load.o default.o
+	$(CC) $(CFLAGS) 					\
+		-o ../bin/analyseplugin 			\
+		analyseplugin.o load.o default.o $(LIBRARIES)
 
 ../bin/listplugins:	listplugins.o search.o
-	$(CC) $(CFLAGS) $(LIBRARIES)					\
-		-o ../bin/listplugins	 				\
-		listplugins.o search.o
+	$(CC) $(CFLAGS) 					\
+		-o ../bin/listplugins	 			\
+		listplugins.o search.o $(LIBRARIES)
 
 ###############################################################################
 #
